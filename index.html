@@ -7,26 +7,67 @@
     <title>UI Functionality Challenge</title>
     <meta name="description" content="UI Functionality Challenge" />
     <meta name="author" content="John Heroy" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <base target="_blank" />
 
     <!-- CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="styles/style.css" rel="stylesheet" />
 
   </head>
   <body ng-app="myApp">
 
-    <div ng-controller="AppController">
-      <button ng-click="changeItUp()">
-        {{ myData[0].value }}
-      </button>
-
-      <canvas tc-chartjs chart-type="doughnut" chart-data="myData" chart-options="myOptions" width="350" height="350"></canvas>
+    <div ng-controller="ChartsController" class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 line-chart">
+          <h2 class="pull-left">Activity</h2>
+          <ul class="nav nav-pills pull-right period-select">
+            <li role="presentation" class="active"><a href="#">Today</a></li>
+            <li role="presentation"><a href="#">3 Days</a></li>
+            <li role="presentation"><a href="#">7 Days</a></li>
+            <li role="presentation"><a href="#">14 Days</a></li>
+          </ul>
+          <canvas tc-chartjs chart-type="line" chart-data="activityData" chart-options="activityOptions" width="700" height="180">
+          </canvas>
+          <ul class="pull-right">
+            <li class="btn btn-success">Mean Line</li>
+            <li class="btn btn-success">Trend Line</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Segments</h2>
+          <table class="table">
+            <tbody>
+              <tr class="total-row">
+                <td>All</td>
+                <td>2,000</td>
+              </tr>
+              <tr>
+                <td>Male</td>
+                <td>1,500</td>
+              </tr>
+              <tr>
+                <td>Female</td>
+                <td>500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h2>Devices</h2>
+          <canvas tc-chartjs chart-type="pie" chart-data="myData" chart-options="myOptions" width="300" height="100"></canvas>
+        </div>
+      </div>
     </div>
+
+
     <!-- JS -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js"></script>
+    <script src="src/config.js"></script>
     <script src="src/app.js"></script>
 
   </body>

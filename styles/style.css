@@ -1,3 +1,16 @@
 body {
-  
+
+}
+
+.line-chart {
+  max-height: 50vh;
+  max-width: 96vw;
+}
+
+.period-select {
+  margin-top: 20px;
+}
+
+.total-row {
+  font-size: 16px;
 }
