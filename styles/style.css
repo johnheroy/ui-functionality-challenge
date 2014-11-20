@@ -1,10 +1,27 @@
 body {
+  background-color: #f1f2f3;
+}
 
+h1 {
+  font-weight: 200;
+}
+
+h2 {
+  font-weight: 100;
+}
+
+li {
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.btn {
+  font-weight: 200;
 }
 
 .line-chart {
   max-height: 50vh;
-  max-width: 96vw;
+  max-width: 97vw;
 }
 
 .period-select {

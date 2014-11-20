@@ -3,7 +3,27 @@
 
   var myApp = angular.module('myApp', ['tc.chartjs']);
 
-  myApp.controller('ChartsController', ['$scope', function($scope){
+  myApp.controller('ChartsController', ['$scope', 'dataservice', function($scope, dataservice){
+
+    $scope.currentPeriod = 'today';
+
+    $scope.setCurrentPeriod = function(period){
+      $scope.currentPeriod = period;
+    }
+
+    activate();
+
+    function activate(){
+      return getRawCsvData();
+    }
+
+    function getRawCsvData(){
+      return dataservice.getCsvData()
+        .then(function(data){
+          $scope.rawCsvData = data;
+          console.log(data);
+        });
+    }
 
     // line chart
     $scope.activityData = {
@@ -46,10 +66,6 @@
     $scope.myOptions =  {
       // Chart.js options can go here.
     };
-
-    $scope.changeItUp = function(){
-      $scope.myData[0].value += 10;
-    }
 
   }]);
 

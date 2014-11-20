@@ -18,14 +18,15 @@
   <body ng-app="myApp">
 
     <div ng-controller="ChartsController" class="container-fluid">
+      <h1>UI Functionality Challenge</h1>
       <div class="row">
         <div class="col-md-12 line-chart">
           <h2 class="pull-left">Activity</h2>
           <ul class="nav nav-pills pull-right period-select">
-            <li role="presentation" class="active"><a href="#">Today</a></li>
-            <li role="presentation"><a href="#">3 Days</a></li>
-            <li role="presentation"><a href="#">7 Days</a></li>
-            <li role="presentation"><a href="#">14 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === 'today'}" ng-click="setCurrentPeriod('today')"><a>Today</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '3 days'}" ng-click="setCurrentPeriod('3 days')"><a>3 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '7 days'}" ng-click="setCurrentPeriod('7 days')"><a>7 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '14 days'}" ng-click="setCurrentPeriod('14 days')"><a>14 Days</a></li>
           </ul>
           <canvas tc-chartjs chart-type="line" chart-data="activityData" chart-options="activityOptions" width="700" height="180">
           </canvas>
@@ -69,6 +70,7 @@
     <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js"></script>
     <script src="src/config.js"></script>
     <script src="src/app.js"></script>
+    <script src="src/dataservice.js"></script>
 
   </body>
 </html>
