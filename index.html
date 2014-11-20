@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>UI Functionality Challenge</title>
+    <meta name="description" content="UI Functionality Challenge" />
+    <meta name="author" content="John Heroy" />
+    <meta name="viewport" content="width=device-width" />
+    <base target="_blank" />
+
+    <!-- CSS -->
+    <link href="styles/style.css" rel="stylesheet" />
+
+  </head>
+  <body ng-app="myApp">
+
+    <div ng-controller="AppController">
+      <button ng-click="changeItUp()">
+        {{ myData[0].value }}
+      </button>
+
+      <canvas tc-chartjs chart-type="doughnut" chart-data="myData" chart-options="myOptions" width="350" height="350"></canvas>
+    </div>
+    <!-- JS -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js"></script>
+    <script src="src/app.js"></script>
+
+  </body>
+</html>
