@@ -1,30 +1,37 @@
 (function(){
   'use strict';
 
-  var myApp = angular.module('myApp', ['tc.chartjs']);
+  angular
+    .module('myApp', ['tc.chartjs'])
+    .controller('ChartsController', ChartsController);
 
-  myApp.controller('ChartsController', ['$scope', 'dataservice', function($scope, dataservice){
+  ChartsController.$inject = ['$scope', 'dataservice', 'dataparser'];
 
-    var TODAY = moment('2014-07-31');
+  function ChartsController($scope, dataservice, dataparser){
+
     $scope.currentPeriod = 'today';
     $scope.rawCsvData = [];
     $scope.filteredData = [];
 
     activate();
 
-    function activate(){
-      getRawCsvData().then(function(){
-        console.log('got raw csv data');
-        console.log($scope.rawCsvData);
-        filterData(1);
-        console.log($scope.filteredData);
-      });
-    }
-
     $scope.setCurrentPeriod = function(period){
       $scope.currentPeriod = period;
       // filter data
+      if (period === 'today'){
+        $scope.filteredData = dataparser.filterData($scope.rawCsvData, 1);
+      } else {
+        $scope.filteredData = dataparser.filterData($scope.rawCsvData, parseInt(period));
+      }
       // update charts
+      updatePieChartData();
+    }
+
+    function activate(){
+      getRawCsvData().then(function(){
+        $scope.filteredData = dataparser.filterData($scope.rawCsvData, 1);
+        updatePieChartData();
+      });
     }
 
     function getRawCsvData(){
@@ -47,19 +54,32 @@
         });
     }
 
-    function filterData(numDays){
-      var earliestMoment = TODAY.subtract(numDays + 1, 'days');
-      $scope.filteredData = _.filter($scope.rawCsvData, function(item){
-        return (item.moment.isAfter(earliestMoment, 'day'));
-      });
-    }
-
     function updateLineChartData(){
 
     }
 
     function updatePieChartData(){
-
+      var deviceCounts = _.countBy($scope.filteredData, 'device');
+      $scope.pieChartData = [
+        {
+            value: deviceCounts['desktop'],
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Desktop"
+        },
+        {
+            value: deviceCounts['mobile'],
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Mobile"
+        },
+        {
+            value: deviceCounts['tablet'],
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Tablet"
+        }
+      ];
     }
 
     function updateTotals(){
@@ -97,17 +117,11 @@
 
     };
 
-    $scope.myData = [
-      { value : 50, color : "#F7464A" },
-      { value : 90, color : "#E2EAE9" },
-      { value : 75, color : "#D4CCC5" },
-      { value : 30, color : "#949FB1"}
-    ];
-
-    $scope.myOptions =  {
-      // Chart.js options can go here.
+    // use .generateLegend()
+    $scope.pieChartOptions = {
+      legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
     };
 
-  }]);
+  }
 
 })();

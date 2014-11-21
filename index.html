@@ -11,7 +11,7 @@
     <base target="_blank" />
 
     <!-- CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles/style.css" rel="stylesheet" />
 
   </head>
@@ -63,8 +63,8 @@
         </div>
         <div class="col-md-6">
           <h2>Devices</h2>
-          <canvas tc-chartjs chart-type="pie" chart-data="myData"
-            chart-options="myOptions" width="300" height="100">
+          <canvas tc-chartjs chart-type="pie" chart-data="pieChartData"
+            chart-options="pieChartOptions" width="300" height="100">
           </canvas>
         </div>
       </div>
@@ -72,15 +72,16 @@
 
 
     <!-- JS -->
-    <script src="bower_components/momentjs/moment.js"></script>
-    <script src="bower_components/lodash/dist/lodash.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/Chart.js/Chart.js"></script>
-    <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js">
+    <script src="bower_components/momentjs/min/moment.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/Chart.js/Chart.min.js"></script>
+    <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.min.js">
     </script>
     <script src="src/config.js"></script>
     <script src="src/app.js"></script>
     <script src="src/dataservice.js"></script>
+    <script src="src/dataparser.js"></script>
 
   </body>
 </html>
