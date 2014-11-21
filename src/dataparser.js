@@ -55,7 +55,7 @@
     function countSegments(rawData, numDays){
       var earliestMoment = TODAY.clone().subtract(numDays, 'days');
       return _.countBy(_.filter(rawData, function(item){
-          return (item.moment.isAfter(earliestMoment, 'day'));
+        return (item.moment.isAfter(earliestMoment, 'day'));
       }), 'gender');
     }
 
@@ -65,16 +65,18 @@
         if (numDays === 1){
           return momentClone.minutes(0).toDate();
         } else if (numDays === 3){
-          var roundedHours = 3 * Math.floor(momentClone.hours());
+          var roundedHours = 3 * Math.floor(momentClone.hours() / 3);
           return momentClone.hours(roundedHours).minutes(0).toDate();
         } else if (numDays === 7){
-          var roundedHours = 8 * Math.floor(momentClone.hours());
+          var roundedHours = 8 * Math.floor(momentClone.hours() / 8);
           return momentClone.hours(roundedHours).minutes(0).toDate();
         } else if (numDays === 14){
-          var roundedHours = 12 * Math.floor(momentClone.hours());
+          var roundedHours = 12 * Math.floor(momentClone.hours() / 12);
           return momentClone.hours(roundedHours).minutes(0).toDate();
         }
       });
+      console.log(timeBuckets);
+      console.log(filteredData);
       var timeSeries = [];
       _.forEach(timeBuckets, function(height, timeBucket){
         timeSeries.push([timeBucket, height]);
