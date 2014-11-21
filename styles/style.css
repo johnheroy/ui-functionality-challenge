@@ -15,8 +15,13 @@ li {
   font-weight: 200;
 }
 
+.nav-pills > li > a {
+  border-radius: 5px;
+}
+
 .btn {
   font-weight: 200;
+  border: none;
 }
 
 .line-chart {

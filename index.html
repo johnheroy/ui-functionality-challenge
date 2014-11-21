@@ -23,12 +23,17 @@
         <div class="col-md-12 line-chart">
           <h2 class="pull-left">Activity</h2>
           <ul class="nav nav-pills pull-right period-select">
-            <li role="presentation" ng-class="{active: currentPeriod === 'today'}" ng-click="setCurrentPeriod('today')"><a>Today</a></li>
-            <li role="presentation" ng-class="{active: currentPeriod === '3 days'}" ng-click="setCurrentPeriod('3 days')"><a>3 Days</a></li>
-            <li role="presentation" ng-class="{active: currentPeriod === '7 days'}" ng-click="setCurrentPeriod('7 days')"><a>7 Days</a></li>
-            <li role="presentation" ng-class="{active: currentPeriod === '14 days'}" ng-click="setCurrentPeriod('14 days')"><a>14 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === 'today'}"
+              ng-click="setCurrentPeriod('today')"><a>Today</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '3 days'}"
+              ng-click="setCurrentPeriod('3 days')"><a>3 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '7 days'}"
+              ng-click="setCurrentPeriod('7 days')"><a>7 Days</a></li>
+            <li role="presentation" ng-class="{active: currentPeriod === '14 days'}"
+              ng-click="setCurrentPeriod('14 days')"><a>14 Days</a></li>
           </ul>
-          <canvas tc-chartjs chart-type="line" chart-data="activityData" chart-options="activityOptions" width="700" height="180">
+          <canvas tc-chartjs chart-type="line" chart-data="activityData"
+            chart-options="activityOptions" width="700" height="180">
           </canvas>
           <ul class="pull-right">
             <li class="btn btn-success">Mean Line</li>
@@ -58,16 +63,21 @@
         </div>
         <div class="col-md-6">
           <h2>Devices</h2>
-          <canvas tc-chartjs chart-type="pie" chart-data="myData" chart-options="myOptions" width="300" height="100"></canvas>
+          <canvas tc-chartjs chart-type="pie" chart-data="myData"
+            chart-options="myOptions" width="300" height="100">
+          </canvas>
         </div>
       </div>
     </div>
 
 
     <!-- JS -->
+    <script src="bower_components/momentjs/moment.js"></script>
+    <script src="bower_components/lodash/dist/lodash.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/Chart.js/Chart.js"></script>
-    <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js"></script>
+    <script src="bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.js">
+    </script>
     <script src="src/config.js"></script>
     <script src="src/app.js"></script>
     <script src="src/dataservice.js"></script>

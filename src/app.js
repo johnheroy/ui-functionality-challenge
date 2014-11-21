@@ -5,24 +5,65 @@
 
   myApp.controller('ChartsController', ['$scope', 'dataservice', function($scope, dataservice){
 
+    var TODAY = moment('2014-07-31');
     $scope.currentPeriod = 'today';
-
-    $scope.setCurrentPeriod = function(period){
-      $scope.currentPeriod = period;
-    }
+    $scope.rawCsvData = [];
+    $scope.filteredData = [];
 
     activate();
 
     function activate(){
-      return getRawCsvData();
+      getRawCsvData().then(function(){
+        console.log('got raw csv data');
+        console.log($scope.rawCsvData);
+        filterData(1);
+        console.log($scope.filteredData);
+      });
+    }
+
+    $scope.setCurrentPeriod = function(period){
+      $scope.currentPeriod = period;
+      // filter data
+      // update charts
     }
 
     function getRawCsvData(){
       return dataservice.getCsvData()
         .then(function(data){
-          $scope.rawCsvData = data;
-          console.log(data);
+          var parsedData = [];
+          var rows = data.data.split('\n');
+          // remove header ['Date', 'Time', 'Gender', 'Device', 'Activity']
+          rows.shift();
+          rows.forEach(function(row){
+            var columns = row.split(',');
+            parsedData.push({
+              'moment'  : moment(columns[0] + ' ' + columns[1]),
+              'gender'  : columns[2],
+              'device'  : columns[3],
+              'activity': columns[4]
+            });
+          });
+          $scope.rawCsvData = parsedData;
         });
+    }
+
+    function filterData(numDays){
+      var earliestMoment = TODAY.subtract(numDays + 1, 'days');
+      $scope.filteredData = _.filter($scope.rawCsvData, function(item){
+        return (item.moment.isAfter(earliestMoment, 'day'));
+      });
+    }
+
+    function updateLineChartData(){
+
+    }
+
+    function updatePieChartData(){
+
+    }
+
+    function updateTotals(){
+
     }
 
     // line chart
