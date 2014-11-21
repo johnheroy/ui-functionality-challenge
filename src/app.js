@@ -24,7 +24,6 @@
 
     $scope.setSegment = function(segment){
       $scope.segment = segment;
-      console.log('segment is', $scope.segment);
       filterAndUpdate();
     }
 

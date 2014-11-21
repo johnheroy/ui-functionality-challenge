@@ -75,8 +75,6 @@
           return momentClone.hours(roundedHours).minutes(0).toDate();
         }
       });
-      console.log(timeBuckets);
-      console.log(filteredData);
       var timeSeries = [];
       _.forEach(timeBuckets, function(height, timeBucket){
         timeSeries.push([timeBucket, height]);
