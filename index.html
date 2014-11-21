@@ -32,8 +32,8 @@
             <li role="presentation" ng-class="{active: currentPeriod === '14 days'}"
               ng-click="setCurrentPeriod('14 days')"><a>14 Days</a></li>
           </ul>
-          <canvas tc-chartjs chart-type="line" chart-data="activityData"
-            chart-options="activityOptions" width="700" height="180">
+          <canvas tc-chartjs chart-type="line" chart-data="lineChartData"
+            chart-options="lineChartOptions" width="700" height="180">
           </canvas>
           <ul class="pull-right">
             <li class="btn btn-success">Mean Line</li>
@@ -46,17 +46,17 @@
           <h2>Segments</h2>
           <table class="table">
             <tbody>
-              <tr class="total-row">
-                <td>All</td>
-                <td>2,000</td>
+              <tr ng-class="{ selectedSegment: segment === 'all' }">
+                <td ng-click="setSegment('all')"><a>All</a></td>
+                <td>{{ segmentNumbers.male + segmentNumbers.female }}</td>
               </tr>
-              <tr>
-                <td>Male</td>
-                <td>1,500</td>
+              <tr ng-class="{ selectedSegment: segment === 'male' }">
+                <td ng-click="setSegment('male')"><a>Male</a></td>
+                <td>{{ segmentNumbers.male }}</td>
               </tr>
-              <tr>
-                <td>Female</td>
-                <td>500</td>
+              <tr ng-class="{ selectedSegment: segment === 'female' }">
+                <td ng-click="setSegment('female')"><a>Female</a></td>
+                <td>{{ segmentNumbers.female }}</td>
               </tr>
             </tbody>
           </table>
