@@ -59,25 +59,45 @@
       }), 'gender');
     }
 
+    function getTimeBucket(item, numDays){
+      var momentClone = item.moment.clone();
+      var roundedHours;
+      if (numDays === 1){
+        roundedHours = momentClone.hours();
+      } else if (numDays === 3){
+        roundedHours = 3 * Math.floor(momentClone.hours() / 3);
+      } else if (numDays === 7){
+        roundedHours = 8 * Math.floor(momentClone.hours() / 8);
+      } else if (numDays === 14){
+        roundedHours = 12 * Math.floor(momentClone.hours() / 12);
+      }
+      return momentClone.hours(roundedHours).minutes(0).toDate();
+    }
+
     function getLineChartData(filteredData, numDays){
-      var timeBuckets = _.countBy(filteredData, function(item){
-        var momentClone = item.moment.clone();
-        if (numDays === 1){
-          return momentClone.minutes(0).toDate();
-        } else if (numDays === 3){
-          var roundedHours = 3 * Math.floor(momentClone.hours() / 3);
-          return momentClone.hours(roundedHours).minutes(0).toDate();
-        } else if (numDays === 7){
-          var roundedHours = 8 * Math.floor(momentClone.hours() / 8);
-          return momentClone.hours(roundedHours).minutes(0).toDate();
-        } else if (numDays === 14){
-          var roundedHours = 12 * Math.floor(momentClone.hours() / 12);
-          return momentClone.hours(roundedHours).minutes(0).toDate();
-        }
+      var timeBucketsTotal = _.countBy(filteredData, function(item){
+        return getTimeBucket(item, numDays);
       });
+
+      var timeBucketsActive = _.countBy(filteredData, function(item){
+        if (item.activity === '0'){
+          return 'inactive';
+        }
+        return getTimeBucket(item, numDays);
+      });
+
+      var timeBucketsPercentage = {};
+      for (var period in timeBucketsTotal){
+        if (timeBucketsTotal[period] === 0 || timeBucketsTotal[period] === undefined || timeBucketsActive[period] === undefined){
+          timeBucketsPercentage[period] = 0;
+        } else {
+          timeBucketsPercentage[period] = 1.00 * timeBucketsActive[period] / timeBucketsTotal[period];
+        }
+      }
+
       var timeSeries = [];
-      _.forEach(timeBuckets, function(height, timeBucket){
-        timeSeries.push([timeBucket, height]);
+      _.forEach(timeBucketsPercentage, function(height, timeBucket){
+        timeSeries.push([timeBucket, height.toFixed(2)]);
       })
       timeSeries = _.sortBy(timeSeries, function(item){
         return (new Date(item[0])).getTime();
