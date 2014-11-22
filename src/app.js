@@ -36,7 +36,7 @@
 
     $scope.toggleTrendLine = function(){
       $scope.trendLineShown = !$scope.trendLineShown;
-
+      updateTrendLine();
     }
 
     function updateMeanLine(){
@@ -54,6 +54,21 @@
       }
     }
 
+    function updateTrendLine(){
+      if ($scope.trendLineShown){
+        $scope.lineChartData.datasets.push(
+          dataparser.getTrendLineData($scope.lineChartData)
+        );
+      } else {
+        var trendLineIndex = _.findIndex($scope.lineChartData.datasets, function(dataset){
+          return dataset.label === 'Trend';
+        });
+        if (trendLineIndex >= 0){
+          $scope.lineChartData.datasets.splice(trendLineIndex, 1);
+        }
+      }
+    }
+
     function filterAndUpdate(){
       var numDays = 1;
       if ($scope.currentPeriod !== 'today') {
@@ -66,6 +81,7 @@
       $scope.segmentNumbers = dataparser.countSegments($scope.rawCsvData, numDays);
       $scope.lineChartData = dataparser.getLineChartData($scope.filteredData, numDays);
       updateMeanLine();
+      updateTrendLine();
     }
 
     function activate(){
@@ -98,13 +114,11 @@
     ///////////////////////////
 
     $scope.lineChartOptions = {
-      // datasetFill: false,
-      // datasetStroke: true
+
     };
 
-    // use .generateLegend()
     $scope.pieChartOptions = {
-      legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+
     };
 
   }

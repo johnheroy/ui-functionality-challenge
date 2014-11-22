@@ -13,7 +13,8 @@
       getPieChartData  : getPieChartData,
       getLineChartData : getLineChartData,
       countSegments    : countSegments,
-      getMeanLineData  : getMeanLineData
+      getMeanLineData  : getMeanLineData,
+      getTrendLineData : getTrendLineData
     };
 
     return service;
@@ -92,6 +93,29 @@
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(68,105,236,1)",
         data: meanHeights
+      };
+    }
+
+    function getTrendLineData(lineChartData){
+      var heights = lineChartData.datasets[0].data;
+      var heightTuples = _.map(heights, function(height, index){
+        return [index + 1, parseFloat(height)];
+      });
+      var linearRegression = regression('linear', heightTuples);
+      var gradient = linearRegression.equation[0];
+      var yIntercept = linearRegression.equation[1];
+      var trendLineHeights = _.map(heights, function(height, index){
+        return (yIntercept + (gradient * (index + 1))).toFixed(3);
+      });
+      return {
+        label: "Trend",
+        fillColor: "rgba(68,175,60,0.1)",
+        strokeColor: "rgba(68,175,60,1)",
+        pointColor: "rgba(68,175,60,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(68,175,60,1)",
+        data: trendLineHeights
       };
     }
 
