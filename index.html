@@ -35,6 +35,9 @@
           <canvas tc-chartjs chart-type="line" chart-data="lineChartData"
             chart-options="lineChartOptions" width="700" height="200">
           </canvas>
+          <p class="pull-left">
+            <em>Note: currently filtering by segment: <strong>{{ segment }}</strong> and period: <strong>{{ currentPeriod }}</strong></em>
+          </p>
           <ul class="pull-right">
             <li class="btn btn-success mean-line-btn" ng-click="toggleMeanLine()"
               ng-class="{meanLineActive: meanLineShown }">Mean Line</li>
@@ -65,16 +68,22 @@
         </div>
         <div class="col-md-6">
           <h2>Devices</h2>
-          <canvas tc-chartjs chart-type="pie" chart-data="pieChartData"
-            chart-options="pieChartOptions" width="300" height="100">
-          </canvas>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>
-            <em>Note: You are currently filtering by segment: <strong>{{ segment }}</strong> and period: <strong>{{ currentPeriod }}</strong></em>
-          </p>
+          <ul class="pie-legend">
+            <li>
+              <span style="background-color: #F7464A"></span> Desktop
+            </li>
+            <li>
+              <span style="background-color: #46BFBD"></span> Mobile
+            </li>
+            <li>
+              <span style="background-color: #FDB45C"></span> Tablet
+            </li>
+          </ul>
+          <div class="pie-chart-container">
+            <canvas tc-chartjs chart-type="pie" chart-data="pieChartData"
+              chart-options="pieChartOptions" width="360" height="150">
+            </canvas>
+          </div>
         </div>
       </div>
     </div>
