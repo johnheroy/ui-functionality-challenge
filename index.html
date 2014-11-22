@@ -33,11 +33,13 @@
               ng-click="setCurrentPeriod('14 days')"><a>14 Days</a></li>
           </ul>
           <canvas tc-chartjs chart-type="line" chart-data="lineChartData"
-            chart-options="lineChartOptions" width="700" height="180">
+            chart-options="lineChartOptions" width="700" height="200">
           </canvas>
           <ul class="pull-right">
-            <li class="btn btn-success">Mean Line</li>
-            <li class="btn btn-success">Trend Line</li>
+            <li class="btn btn-success mean-line-btn" ng-click="toggleMeanLine()"
+              ng-class="{meanLineActive: meanLineShown }">Mean Line</li>
+            <li class="btn btn-success trend-line-btn" ng-click="toggleTrendLine()"
+              ng-class="{trendLineActive: trendLineShown}">Trend Line</li>
           </ul>
         </div>
       </div>
@@ -66,6 +68,13 @@
           <canvas tc-chartjs chart-type="pie" chart-data="pieChartData"
             chart-options="pieChartOptions" width="300" height="100">
           </canvas>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            <em>Note: You are currently filtering by segment: <strong>{{ segment }}</strong> and period: <strong>{{ currentPeriod }}</strong></em>
+          </p>
         </div>
       </div>
     </div>

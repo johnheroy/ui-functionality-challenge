@@ -12,7 +12,8 @@
       filterData       : filterData,
       getPieChartData  : getPieChartData,
       getLineChartData : getLineChartData,
-      countSegments    : countSegments
+      countSegments    : countSegments,
+      getMeanLineData  : getMeanLineData
     };
 
     return service;
@@ -74,6 +75,26 @@
       return momentClone.hours(roundedHours).minutes(0).toDate();
     }
 
+    function getMeanLineData(lineChartData){
+      var heights = lineChartData.datasets[0].data;
+      var mean = _.reduce(heights, function(sum, num){
+        return sum + (num / heights.length);
+      }, 0).toFixed(2);
+      var meanHeights = _.map(new Array(heights.length), function(){
+        return mean;
+      });
+      return {
+        label: "Mean",
+        fillColor: "rgba(68,105,236,0.1)",
+        strokeColor: "rgba(68,105,236,1)",
+        pointColor: "rgba(68,105,236,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(68,105,236,1)",
+        data: meanHeights
+      };
+    }
+
     function getLineChartData(filteredData, numDays){
       var timeBucketsTotal = _.countBy(filteredData, function(item){
         return getTimeBucket(item, numDays);
@@ -88,10 +109,13 @@
 
       var timeBucketsPercentage = {};
       for (var period in timeBucketsTotal){
-        if (timeBucketsTotal[period] === 0 || timeBucketsTotal[period] === undefined || timeBucketsActive[period] === undefined){
+        if (timeBucketsTotal[period] === 0 ||
+            timeBucketsTotal[period] === undefined ||
+            timeBucketsActive[period] === undefined){
           timeBucketsPercentage[period] = 0;
         } else {
-          timeBucketsPercentage[period] = 1.00 * timeBucketsActive[period] / timeBucketsTotal[period];
+          timeBucketsPercentage[period] = 1.00 * timeBucketsActive[period] /
+            timeBucketsTotal[period];
         }
       }
 

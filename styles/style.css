@@ -26,7 +26,7 @@ li {
 
 .line-chart {
   max-width: 97vw;
-  min-height: 25vw;
+  min-height: 20vw;
 }
 
 .period-select {
@@ -35,4 +35,40 @@ li {
 
 .selectedSegment {
   font-size: 16px;
+}
+
+/* mean line */
+
+.mean-line-btn {
+  background-color: #4469EC;
+}
+
+.mean-line-btn:hover {
+  background-color: #3255D1;
+}
+
+.meanLineActive {
+  background-color: #3255D1;
+}
+
+.meanLineActive:hover {
+  background-color: #4469EC;
+}
+
+/* trend line */
+
+.trend-line-btn {
+  background-color: #44AF3C;
+}
+
+.trend-line-btn:hover {
+  background-color: #34942C;
+}
+
+.trendLineActive {
+  background-color: #34942C;
+}
+
+.trendLineActive:hover {
+  background-color: #44AF3C;
 }

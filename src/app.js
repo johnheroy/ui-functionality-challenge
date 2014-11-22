@@ -14,6 +14,8 @@
     $scope.segmentNumbers = {};
     $scope.rawCsvData = [];
     $scope.filteredData = [];
+    $scope.meanLineShown = false;
+    $scope.trendLineShown = false;
 
     activate();
 
@@ -27,6 +29,31 @@
       filterAndUpdate();
     }
 
+    $scope.toggleMeanLine = function(){
+      $scope.meanLineShown = !$scope.meanLineShown;
+      updateMeanLine();
+    }
+
+    $scope.toggleTrendLine = function(){
+      $scope.trendLineShown = !$scope.trendLineShown;
+
+    }
+
+    function updateMeanLine(){
+      if ($scope.meanLineShown){
+        $scope.lineChartData.datasets.push(
+          dataparser.getMeanLineData($scope.lineChartData)
+        );
+      } else {
+        var meanLineIndex = _.findIndex($scope.lineChartData.datasets, function(dataset){
+          return dataset.label === 'Mean';
+        });
+        if (meanLineIndex >= 0){
+          $scope.lineChartData.datasets.splice(meanLineIndex, 1);
+        }
+      }
+    }
+
     function filterAndUpdate(){
       var numDays = 1;
       if ($scope.currentPeriod !== 'today') {
@@ -38,6 +65,7 @@
       $scope.pieChartData = dataparser.getPieChartData($scope.filteredData);
       $scope.segmentNumbers = dataparser.countSegments($scope.rawCsvData, numDays);
       $scope.lineChartData = dataparser.getLineChartData($scope.filteredData, numDays);
+      updateMeanLine();
     }
 
     function activate(){
@@ -70,7 +98,8 @@
     ///////////////////////////
 
     $scope.lineChartOptions = {
-
+      // datasetFill: false,
+      // datasetStroke: true
     };
 
     // use .generateLegend()
